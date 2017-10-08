@@ -4,3 +4,4 @@
 using namespace core;
 
 #include "lexer.h"
+#include "parser.h"

@@ -26,8 +26,8 @@ const char* src = R"(Str Lexer::run(Str s) {
 int main()
 {
 	Lexer lexer;
-	Str lexemas = lexer.run(src);
-	cout << lexemas.to_string();
+	Str lexemes = lexer.run(src);
+	cout << lexemes.to_string();
 	getchar();
 
     return 0;

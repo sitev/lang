@@ -114,51 +114,51 @@ namespace lang {
 		return false;
 	}
 
-	bool Lexer::isIdentifier(Str lexema) {
-		int len = lexema.length();
+	bool Lexer::isIdentifier(Str lexeme) {
+		int len = lexeme.length();
 		if (len == 0) return false;
 		
-		if (!isLetter(lexema[0])) return false;
+		if (!isLetter(lexeme[0])) return false;
 		
 		for (int i = 1; i < len; i++) {
-			if (!isLetter(lexema[i]) && !isNumber(lexema[i])) return false;
+			if (!isLetter(lexeme[i]) && !isNumber(lexeme[i])) return false;
 		}
 
 		return true;
 	}
 
-	bool Lexer::isNumber(Str lexema) {
-		int len = lexema.length();
+	bool Lexer::isNumber(Str lexeme) {
+		int len = lexeme.length();
 		if (len == 0) return false;
 
 		for (int i = 1; i < len; i++) {
-			if (!isNumber(lexema[i])) return false;
+			if (!isNumber(lexeme[i])) return false;
 		}
 		return true;
 	}
 
-	bool Lexer::isSpecial(Str lexema) {
-		int len = lexema.length();
+	bool Lexer::isSpecial(Str lexeme) {
+		int len = lexeme.length();
 		if (len == 0) return false;
 
 		for (int i = 1; i < len; i++) {
-			if (!isSpecial(lexema[i])) return false;
+			if (!isSpecial(lexeme[i])) return false;
 		}
 		return true;
 	}
 
-	LexemaType Lexer::getLexemaType(Str lexema) {
-		if (isIdentifier(lexema)) return ltIdentifier;
-		else if (isNumber(lexema)) return ltNumber;
-		else if (isSpecial(lexema)) return ltSpecial;
+	LexemeType Lexer::getLexemeType(Str lexeme) {
+		if (isIdentifier(lexeme)) return ltIdentifier;
+		else if (isNumber(lexeme)) return ltNumber;
+		else if (isSpecial(lexeme)) return ltSpecial;
 
 		return ltError;
 	}
 
-	Token Lexer::getToken(Str lexema) {
+	Token Lexer::getToken(Str lexeme) {
 		Token token;
-		token.lexema = lexema;
-		token.type = getLexemaType(lexema);
+		token.lexeme = lexeme;
+		token.type = getLexemeType(lexeme);
 
 		return token;
 	}
