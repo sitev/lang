@@ -55,6 +55,20 @@ namespace lang {
 		pos = savePos = len = 0;
 	}
 
+	Str Parser::run(Str s) {
+		lexer->start(s);
+		Str result = "";
+		pos = savePos = len = 0;
+		tokens.clear();
+		nodes.clear();
+		while (true) {
+			bool flag = step();
+			if (!flag) break;
+		}
+
+		return result;
+	}
+
 	Token Parser::getToken() {
 		if (pos < len) {
 			Token token = tokens[pos];

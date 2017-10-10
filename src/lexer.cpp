@@ -7,7 +7,7 @@ namespace lang {
 	Lexer::Lexer() {
 		letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
 		numerals = "0123456789";
-		specials = "=+-*/%";
+		specials = ";(){}=+-*/%";
 		mode = lmNormal;
 		isSlesh = isMul = isCR = false;
 	}
@@ -159,7 +159,6 @@ namespace lang {
 		Token token;
 		token.lexeme = lexeme;
 		token.type = getLexemeType(lexeme);
-
 		return token;
 	}
 

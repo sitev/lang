@@ -84,7 +84,8 @@ namespace lang {
 		vector<Node*> nodes;
 	public:
 		Parser(Lexer *lexer);
-		virtual Str run(Str s) = 0;
+		virtual Str run(Str s);
+		virtual bool step() = 0;
 		virtual Token getToken();
 		virtual void savePosition();
 		virtual void savePosition(int &savePos);
