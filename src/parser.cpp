@@ -61,10 +61,8 @@ namespace lang {
 		pos = savePos = len = 0;
 		tokens.clear();
 		nodes.clear();
-		while (true) {
-			bool flag = step();
-			if (!flag) break;
-		}
+
+		bool flag = doMainCodeBlock();
 
 		return result;
 	}

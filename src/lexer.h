@@ -3,7 +3,7 @@
 namespace lang {
 
 	enum LexerMode { lmNormal, lmRemmark, lmRemmark2, lmString };
-	enum LexemeType { ltIdentifier, ltNumber, ltSpecial, ltError };
+	enum LexemeType { ltIdentifier, ltNumber, ltSpecial, ltError, ltEnd };
 
 	class Token {
 	public:

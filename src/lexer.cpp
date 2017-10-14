@@ -151,6 +151,7 @@ namespace lang {
 		if (isIdentifier(lexeme)) return ltIdentifier;
 		else if (isNumber(lexeme)) return ltNumber;
 		else if (isSpecial(lexeme)) return ltSpecial;
+		else if (lexeme == "") return ltEnd;
 
 		return ltError;
 	}

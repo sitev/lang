@@ -85,7 +85,7 @@ namespace lang {
 	public:
 		Parser(Lexer *lexer);
 		virtual Str run(Str s);
-		virtual bool step() = 0;
+		virtual bool doMainCodeBlock() = 0;
 		virtual Token getToken();
 		virtual void savePosition();
 		virtual void savePosition(int &savePos);
