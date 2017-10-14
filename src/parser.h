@@ -6,11 +6,11 @@
 
 namespace lang {
 
-	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOper };
+	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOper, ntCodeBlock };
 
 	class Node {
 	public:
-		NodeType nt;
+		NodeType type;
 		vector<Node*> nodes;
 		Node();
 	};
@@ -76,13 +76,19 @@ namespace lang {
 		Oper();
 	};
 
+	class CodeBlock : public Node {
+	public:
+		Str source;
+		CodeBlock();
+	};
+
 	class Parser {
 	protected:
 		Lexer *lexer;
 		int pos, savePos, len;
 		vector<Token> tokens;
-		vector<Node*> nodes;
 	public:
+		vector<Node*> nodes;
 		Parser(Lexer *lexer);
 		virtual Str run(Str s);
 		virtual bool doMainCodeBlock() = 0;
