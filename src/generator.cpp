@@ -61,10 +61,33 @@ namespace lang {
 	}
 
 	bool Generator::genFuncDef(Node *node) {
+		cout << "func_def ";
+		FuncDef *fd = (FuncDef*)node;
+		cout << fd->type.to_string() << " " << fd->name.to_string() << "(";
+
+		int count = fd->params.size();
+		for (int i = 0; i < count; i++) {
+			FuncDefParam *fdp = (FuncDefParam*)fd->params[i];
+			cout << fdp->type.to_string() << " " << fdp->name.to_string();
+			if (i + 1 != count) cout << ", ";
+		}
+
+		cout << ")" << endl;
+
+		count = fd->nodes.size();
+		for (int i = 0; i < count; i++) {
+			Node *nd = fd->nodes[i];
+			generate(nd);
+		}
+
 		return true;
 	}
 
 	bool Generator::genFunc(Node *node) {
+		cout << "func ";
+		Func *func = (Func*)node;
+		cout << func->def->type.to_string() << " " << func->def->name.to_string() << "();" << endl;
+
 		return true;
 	}
 	
