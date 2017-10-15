@@ -1,57 +1,53 @@
+#include <iostream>
+using namespace std; 
+
 #include "lang.h"
 
 namespace lang {
 
 	//----------   Node   --------------------------------------------------
 	Node::Node() {
-		type = ntNone;
+		nodeType = ntNone;
 	}
 
 	//----------   Number   --------------------------------------------------
 	Number::Number() {
-		type = ntNumber;
+		nodeType = ntNumber;
 	}
 
 	//----------   VarDef   -----------------------------------------------------
 	VarDef::VarDef() {
-		type = ntVarDef;
+		nodeType = ntVarDef;
 	}
 
 	//----------   Var   -----------------------------------------------------
 	Var::Var() {
-		type = ntVar;
-	}
-
-	//----------   FuncDefParamItem   -------------------------------------------
-	FuncDefParamItem::FuncDefParamItem() {
-	}
-
-	//----------   FuncDefParams   ----------------------------------------------
-	FuncDefParams::FuncDefParams() {
-	}
-
-	//----------   FuncDefBody   ------------------------------------------------
-	FuncDefBody::FuncDefBody() {
+		nodeType = ntVar;
 	}
 
 	//----------   FuncDef   ----------------------------------------------------
 	FuncDef::FuncDef() {
-		type = ntFuncDef;
+		nodeType = ntFuncDef;
 	}
 
 	//----------   Func   ----------------------------------------------------
 	Func::Func() {
-		type = ntFunc;
+		nodeType = ntFunc;
 	}
 
-	//----------   Oper   ----------------------------------------------------
-	Oper::Oper() {
-		type = ntOper;
+	//----------   Operator   ----------------------------------------------------
+	Operator::Operator() {
+		nodeType = ntOperator;
+	}
+
+	//----------   Operator   ----------------------------------------------------
+	Expression::Expression() {
+		nodeType = ntExpression;
 	}
 
 	//----------   CodeBlock   ----------------------------------------------------
 	CodeBlock::CodeBlock() {
-
+		nodeType = ntCodeBlock;
 	}
 
 	//----------   Parser   -----------------------------------------------------
@@ -76,6 +72,8 @@ namespace lang {
 		if (pos < len) {
 			Token token = tokens[pos];
 			pos++;
+
+			cout << token.lexeme.to_string() << endl;
 			return token;
 		}
 
@@ -84,6 +82,7 @@ namespace lang {
 		tokens.push_back(token);
 		pos++;
 		len++;
+		cout << token.lexeme.to_string() << " " << token.type << endl;
 		return token;
 	}
 
@@ -98,5 +97,9 @@ namespace lang {
 	}
 	void Parser::rollback(int savePos) {
 		pos = savePos;
+	}
+
+	void Parser::decPosition() {
+		if (pos > 0) pos--;
 	}
 }

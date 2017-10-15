@@ -6,11 +6,12 @@
 
 namespace lang {
 
-	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOper, ntCodeBlock };
+	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpression, ntCodeBlock };
 
 	class Node {
 	public:
-		NodeType type;
+		NodeType nodeType;
+		Node *parent = nullptr;
 		vector<Node*> nodes;
 		Node();
 	};
@@ -35,31 +36,17 @@ namespace lang {
 		Var();
 	};
 
-	class FuncDefParamItem {
+	class FuncDefParam {
 	public:
 		Str type;
 		Str name;
-		FuncDefParamItem();
-	};
-
-	class FuncDefParams {
-	protected:
-		vector<FuncDefParamItem*> items;
-	public:
-		FuncDefParams();
-	};
-
-	class FuncDefBody {
-	public:
-		FuncDefBody();
 	};
 
 	class FuncDef : public Node {
 	public:
 		Str type;
 		Str name;
-		FuncDefParams *params = nullptr;
-		FuncDefBody *body = nullptr;
+		vector<FuncDefParam*> params;
 		FuncDef();
 	};
 
@@ -69,11 +56,16 @@ namespace lang {
 		Func();
 	};
 
-	class Oper : public Node {
+	class Operator : public Node {
 	public:
 		Str name;
-		int count;
-		Oper();
+		int count; //count of operands
+		Operator();
+	};
+
+	class Expression : public Node {
+	public:
+		Expression();
 	};
 
 	class CodeBlock : public Node {
@@ -97,6 +89,7 @@ namespace lang {
 		virtual void savePosition(int &savePos);
 		virtual void rollback();
 		virtual void rollback(int savePos);
+		virtual void decPosition();
 	};
 	
 
