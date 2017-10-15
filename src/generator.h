@@ -8,17 +8,17 @@ namespace lang {
 		~Generator();
 
 		virtual Str run();
-		virtual bool generate(Node *node);
+		virtual Str generate(Node *node);
 	protected:
 		Parser *parser;
-		virtual bool genNumber(Node *node);
-		virtual bool genVarDef(Node *node);
-		virtual bool genVar(Node *node);
-		virtual bool genFuncDef(Node *node);
-		virtual bool genFunc(Node *node);
-		virtual bool genOperator(Node *node);
-		virtual bool genExpression(Node *node);
-		virtual bool genCodeBlock(Node *node);
+		virtual Str genNumber(Node *node);
+		virtual Str genVarDef(Node *node);
+		virtual Str genVar(Node *node);
+		virtual Str genFuncDef(Node *node);
+		virtual Str genFunc(Node *node);
+		virtual Str genOperator(Node *node);
+		virtual Str genExpression(Node *node);
+		virtual Str genCodeBlock(Node *node);
 	};
 
 }

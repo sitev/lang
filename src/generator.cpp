@@ -21,7 +21,7 @@ namespace lang {
 		return "";
 	}
 
-	bool Generator::generate(Node *node) {
+	Str Generator::generate(Node *node) {
 		switch (node->nodeType) {
 		case ntNumber: return genNumber(node);
 		case ntVarDef: return genVarDef(node);
@@ -33,46 +33,44 @@ namespace lang {
 		case ntCodeBlock: return genCodeBlock(node);
 		}
 
-		return false;
+		return "";
 	}
 
-	bool Generator::genNumber(Node *node) {
-		cout << "number ";
+	Str Generator::genNumber(Node *node) {
+		Str s = "number ";
 		Number *num = (Number*)node;
-		cout << num->value << "| ";
-		return true;
+		s +=  num->value + " ";
+		return s;
 	}
 
-	bool Generator::genVarDef(Node *node) {
-		cout << "var_def ";
+	Str Generator::genVarDef(Node *node) {
+		Str s = "var_def ";
 		VarDef *vd = (VarDef*)node;
-		cout << vd->type.to_string() << " " << vd->name.to_string();
-
-		cout << ";" << endl;
-		return true;
+		s += vd->type + " " + vd->name + ";\r\n";
+		return s;
 	}
 
-	bool Generator::genVar(Node *node) {
-		cout << "var ";
+	Str Generator::genVar(Node *node) {
+		Str s = "var ";
 		Var *var = (Var*)node;
 
-		cout << var->def->name.to_string() << " ";
-		return true;
+		s += var->def->name + " ";
+		return s;
 	}
 
-	bool Generator::genFuncDef(Node *node) {
-		cout << "func_def ";
+	Str Generator::genFuncDef(Node *node) {
+		Str s = "func_def ";
 		FuncDef *fd = (FuncDef*)node;
-		cout << fd->type.to_string() << " " << fd->name.to_string() << "(";
+		s += fd->type + " " + fd->name + "(";
 
 		int count = fd->params.size();
 		for (int i = 0; i < count; i++) {
 			FuncDefParam *fdp = (FuncDefParam*)fd->params[i];
-			cout << fdp->type.to_string() << " " << fdp->name.to_string();
-			if (i + 1 != count) cout << ", ";
+			s += fdp->type + " " + fdp->name;
+			if (i + 1 != count) s += ", ";
 		}
 
-		cout << ")" << endl;
+		s += ")\r\n";
 
 		count = fd->nodes.size();
 		for (int i = 0; i < count; i++) {
@@ -80,41 +78,41 @@ namespace lang {
 			generate(nd);
 		}
 
-		return true;
+		return s;
 	}
 
-	bool Generator::genFunc(Node *node) {
-		cout << "func ";
+	Str Generator::genFunc(Node *node) {
+		Str s = "func ";
 		Func *func = (Func*)node;
-		cout << func->def->type.to_string() << " " << func->def->name.to_string() << "();" << endl;
+		s += func->def->type + " " + func->def->name + "();\r\n";
 
-		return true;
+		return s;
 	}
 	
-	bool Generator::genOperator(Node *node) {
-		cout << "operator ";
+	Str Generator::genOperator(Node *node) {
+		Str s = "operator ";
 		Operator *oper = (Operator*)node;
-		cout << oper->name.to_string() << " " << oper->count << "| ";
-		return true;
+		s += oper->name + " " + oper->count + " ";
+		return s;
 	}
 
-	bool Generator::genExpression(Node *node) {
-		cout << "exspression ";
+	Str Generator::genExpression(Node *node) {
+		Str s = "expression ";
 		Expression *exp = (Expression*)node;
 
 		int count = node->nodes.size();
-		cout << "/" << count << "/ ";
+		s += "/" + (Str)count + "/ ";
 		for (int i = 0; i < count; i++) {
 			Node *nd = node->nodes[i];
 			generate(nd);
 		}
 
-		cout << ";" << endl;
-		return true;
+		s += ";\r\n";
+		return s;
 	}
 
-	bool Generator::genCodeBlock(Node *node) {
-		cout << "code_block {" << endl;
+	Str Generator::genCodeBlock(Node *node) {
+		Str s = "code_block {\r\n";
 
 		int count = node->nodes.size();
 		for (int i = 0; i < count; i++) {
@@ -122,7 +120,7 @@ namespace lang {
 			generate(nd);
 		}
 
-		cout << "}" << endl;
-		return true;
+		s += "}\r\n";
+		return s;
 	}
 }
