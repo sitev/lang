@@ -35,12 +35,17 @@ namespace lang {
 		nodeType = ntFunc;
 	}
 
+	//----------   ExpOper   ----------------------------------------------------
+	ExpOper::ExpOper() {
+		nodeType = ntExpOper;
+	}
+
 	//----------   Operator   ----------------------------------------------------
 	Operator::Operator() {
 		nodeType = ntOperator;
 	}
 
-	//----------   Operator   ----------------------------------------------------
+	//----------   Expression   ----------------------------------------------------
 	Expression::Expression() {
 		nodeType = ntExpression;
 	}
@@ -73,7 +78,7 @@ namespace lang {
 			Token token = tokens[pos];
 			pos++;
 
-			cout << token.lexeme.to_string() << endl;
+			//cout << token.lexeme.to_string() << endl;
 			return token;
 		}
 
@@ -82,7 +87,7 @@ namespace lang {
 		tokens.push_back(token);
 		pos++;
 		len++;
-		cout << token.lexeme.to_string() << " " << token.type << endl;
+		//cout << token.lexeme.to_string() << " " << token.type << endl;
 		return token;
 	}
 

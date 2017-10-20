@@ -6,7 +6,7 @@
 
 namespace lang {
 
-	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpression, ntCodeBlock };
+	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock };
 
 	class Node {
 	public:
@@ -59,12 +59,19 @@ namespace lang {
 	class Operator : public Node {
 	public:
 		Str name;
-		int count; //count of operands
 		Operator();
+	};
+
+	class ExpOper : public Node {
+	public:
+		Str name;
+		int count; //count of operands
+		ExpOper();
 	};
 
 	class Expression : public Node {
 	public:
+		bool isTZ = false;
 		Expression();
 	};
 

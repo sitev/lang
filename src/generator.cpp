@@ -11,17 +11,18 @@ namespace lang {
 	}
 
 	Str Generator::run() {
+		Str s = "";
 		int count = parser->nodes.size();
-		cout << "count = " << count << endl;
+		//s += "//count nodes = " + to_string(count) + "\r\n";
 		for (int i = 0; i < count; i++) {
 			Node *node = parser->nodes[i];
-			generate(node);
+			s += generate(node);
 		}
 
-		return "";
+		return s;
 	}
 
-	Str Generator::generate(Node *node) {
+	Str Generator::generate(Node *node, bool isExpNotCR) {
 		switch (node->nodeType) {
 		case ntNumber: return genNumber(node);
 		case ntVarDef: return genVarDef(node);
@@ -29,7 +30,8 @@ namespace lang {
 		case ntFuncDef: return genFuncDef(node);
 		case ntFunc: return genFunc(node);
 		case ntOperator: return genOperator(node);
-		case ntExpression: return genExpression(node);
+		case ntExpOper: return genExpOper(node);
+		case ntExpression: return genExpression(node, isExpNotCR);
 		case ntCodeBlock: return genCodeBlock(node);
 		}
 
@@ -39,7 +41,7 @@ namespace lang {
 	Str Generator::genNumber(Node *node) {
 		Str s = "number ";
 		Number *num = (Number*)node;
-		s +=  num->value + " ";
+		s += num->value + " ";
 		return s;
 	}
 
@@ -89,14 +91,21 @@ namespace lang {
 		return s;
 	}
 	
-	Str Generator::genOperator(Node *node) {
+	Str Generator::genExpOper(Node *node) {
 		Str s = "operator ";
-		Operator *oper = (Operator*)node;
-		s += oper->name + " " + oper->count + " ";
+		ExpOper *oper = (ExpOper*)node;
+		s += oper->name + " ";
 		return s;
 	}
 
-	Str Generator::genExpression(Node *node) {
+	Str Generator::genOperator(Node *node) {
+		Str s = "operator ";
+		Operator *oper = (Operator*)node;
+		s += oper->name + " ";
+		return s;
+	}
+
+	Str Generator::genExpression(Node *node, bool isExpNotCR) {
 		Str s = "expression ";
 		Expression *exp = (Expression*)node;
 
@@ -107,7 +116,7 @@ namespace lang {
 			generate(nd);
 		}
 
-		s += ";\r\n";
+		//s += ";\r\n";
 		return s;
 	}
 
@@ -121,6 +130,14 @@ namespace lang {
 		}
 
 		s += "}\r\n";
+		return s;
+	}
+	
+	Str Generator::getTab(int count) {
+		Str s = "";
+		for (int i = 0; i < count; i++) {
+			s += "\t";
+		}
 		return s;
 	}
 }
