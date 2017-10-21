@@ -27,6 +27,7 @@ namespace lang {
 	public:
 		Str type;
 		Str name;
+		bool isArray = false;
 		VarDef();
 	};
 
