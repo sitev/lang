@@ -33,6 +33,7 @@ namespace lang {
 		case ntExpOper: return genExpOper(node);
 		case ntExpression: return genExpression(node, isExpNotCR);
 		case ntCodeBlock: return genCodeBlock(node);
+		case ntClass: return genClass(node);
 		}
 
 		return "";
@@ -132,7 +133,20 @@ namespace lang {
 		s += "}\r\n";
 		return s;
 	}
-	
+
+	Str Generator::genClass(Node *node) {
+		Str s = "class {\r\n";
+
+		int count = node->nodes.size();
+		for (int i = 0; i < count; i++) {
+			Node *nd = node->nodes[i];
+			generate(nd);
+		}
+
+		s += "}\r\n";
+		return s;
+	}
+
 	Str Generator::getTab(int count) {
 		Str s = "";
 		for (int i = 0; i < count; i++) {

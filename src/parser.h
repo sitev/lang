@@ -6,7 +6,7 @@
 
 namespace lang {
 
-	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock };
+	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock, ntClass };
 
 	class Node {
 	public:
@@ -21,7 +21,6 @@ namespace lang {
 		int value;
 		Number();
 	};
-
 
 	class VarDef : public Node {
 	public:
@@ -80,6 +79,13 @@ namespace lang {
 	public:
 		Str source;
 		CodeBlock();
+	};
+
+	class Class : public Node {
+	public:
+		Str name;
+		Class *parent;
+		Class();
 	};
 
 	class Parser {

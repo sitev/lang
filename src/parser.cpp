@@ -55,6 +55,13 @@ namespace lang {
 		nodeType = ntCodeBlock;
 	}
 
+	//----------   Class   ----------------------------------------------------
+	Class::Class() {
+		nodeType = ntClass;
+		parent = nullptr;
+	}
+
+
 	//----------   Parser   -----------------------------------------------------
 	Parser::Parser(Lexer *lexer) {
 		this->lexer = lexer;
