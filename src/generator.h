@@ -13,6 +13,7 @@ namespace lang {
 	protected:
 		Parser *parser;
 		virtual Str genNumber(Node *node);
+		virtual Str genString(Node *node);
 		virtual Str genVarDef(Node *node);
 		virtual Str genVar(Node *node);
 		virtual Str genFuncDef(Node *node);
@@ -22,6 +23,7 @@ namespace lang {
 		virtual Str genExpression(Node *node, bool isExpNotCR = false);
 		virtual Str genCodeBlock(Node *node);
 		virtual Str genClass(Node *node);
+		virtual Str genConstruct(Node *node);
 
 		virtual Str getTab(int count);
 	};

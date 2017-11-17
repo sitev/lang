@@ -6,10 +6,12 @@
 
 namespace lang {
 
-	enum NodeType { ntNone, ntNumber, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock, ntClass };
+	enum NodeType { ntNone, ntNumber, ntString, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock, ntClass, ntConstruct };
 
+	static int g_uid = 1;
 	class Node {
 	public:
+		int uid;
 		NodeType nodeType;
 		Node *parent = nullptr;
 		vector<Node*> nodes;
@@ -22,8 +24,16 @@ namespace lang {
 		Number();
 	};
 
+	class StringNode : public Node {
+	public:
+		Str value;
+		StringNode();
+	};
+
+	class Class;
 	class VarDef : public Node {
 	public:
+		Class *clss = nullptr; // если (clss == nullptr) то переменная имеет стандартный тип, иначе она является объектом класса clss
 		Str type;
 		Str name;
 		bool isArray = false;
@@ -86,6 +96,13 @@ namespace lang {
 		Str name;
 		Class *parent;
 		Class();
+		virtual VarDef* findVar(Str s);
+	};
+
+	class Construct : public Node {
+	public:
+		Class *clss = nullptr;
+		Construct();
 	};
 
 	class Parser {

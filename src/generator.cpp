@@ -25,6 +25,7 @@ namespace lang {
 	Str Generator::generate(Node *node, bool isExpNotCR) {
 		switch (node->nodeType) {
 		case ntNumber: return genNumber(node);
+		case ntString: return genString(node);
 		case ntVarDef: return genVarDef(node);
 		case ntVar: return genVar(node);
 		case ntFuncDef: return genFuncDef(node);
@@ -34,6 +35,7 @@ namespace lang {
 		case ntExpression: return genExpression(node, isExpNotCR);
 		case ntCodeBlock: return genCodeBlock(node);
 		case ntClass: return genClass(node);
+		case ntConstruct: return genConstruct(node);
 		}
 
 		return "";
@@ -43,6 +45,13 @@ namespace lang {
 		Str s = "number ";
 		Number *num = (Number*)node;
 		s += num->value + " ";
+		return s;
+	}
+
+	Str Generator::genString(Node *node) {
+		Str s = "string ";
+		StringNode *sn = (StringNode*)node;
+		s += sn->value;
 		return s;
 	}
 
@@ -145,6 +154,10 @@ namespace lang {
 
 		s += "}\r\n";
 		return s;
+	}
+
+	Str Generator::genConstruct(Node *node) {
+		return "construct ";
 	}
 
 	Str Generator::getTab(int count) {

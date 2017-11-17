@@ -8,11 +8,17 @@ namespace lang {
 	//----------   Node   --------------------------------------------------
 	Node::Node() {
 		nodeType = ntNone;
+		uid = g_uid++;
 	}
 
 	//----------   Number   --------------------------------------------------
 	Number::Number() {
 		nodeType = ntNumber;
+	}
+
+	//----------   StringNode   --------------------------------------------------
+	StringNode::StringNode() {
+		nodeType = ntString;
 	}
 
 	//----------   VarDef   -----------------------------------------------------
@@ -61,6 +67,22 @@ namespace lang {
 		parent = nullptr;
 	}
 
+	VarDef* Class::findVar(Str s) {
+		int count = this->nodes.size();
+		for (int i = 0; i < count; i++) {
+			Node *nd = this->nodes[i];
+			if (nd->nodeType == ntVarDef) {
+				VarDef *vd = (VarDef*)nd;
+				if (vd->name == s) return vd;
+			}
+		}
+		return nullptr;
+	}
+
+	//----------   Construct   ----------------------------------------------------
+	Construct::Construct() {
+		nodeType = ntConstruct;
+	}
 
 	//----------   Parser   -----------------------------------------------------
 	Parser::Parser(Lexer *lexer) {

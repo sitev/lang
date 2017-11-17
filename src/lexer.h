@@ -3,7 +3,7 @@
 namespace lang {
 
 	enum LexerMode { lmNormal, lmRemmark, lmRemmark2, lmString };
-	enum LexemeType { ltIdentifier, ltNumber, ltSpecial, ltError, ltEof };
+	enum LexemeType { ltIdentifier, ltNumber, ltSpecial, ltString, ltError, ltEof };
 
 	class Token {
 	public:
@@ -20,6 +20,7 @@ namespace lang {
 		LexerMode mode;
 		bool isSlesh, isMul, isCR;
 	public:
+		int tmp;
 		Lexer();
 		~Lexer();
 
@@ -32,11 +33,12 @@ namespace lang {
 		virtual bool isNumeral(char a);
 		virtual bool isSpecial(char a);
 
-		virtual bool isIdentifier(Str lexema);
-		virtual bool isNumber(Str lexema);
-		virtual bool isSpecial(Str lexema);
-		virtual LexemeType getLexemeType(Str lexema);
+		virtual bool isIdentifier(Str lexeme);
+		virtual bool isNumber(Str lexeme);
+		virtual bool isSpecial(Str lexeme);
+		virtual bool isString(Str lexeme);
+		virtual LexemeType getLexemeType(Str lexeme);
 
-		virtual Token getToken(Str lexema);
+		virtual Token getToken(Str lexeme);
 	};
 }

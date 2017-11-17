@@ -147,10 +147,21 @@ namespace lang {
 		return true;
 	}
 
+	bool Lexer::isString(Str lexeme) {
+		int len = lexeme.length();
+		if (len < 2) return false;
+
+		if (lexeme[0] != '\"') return false;
+		if (lexeme[len - 1] != '\"') return false;
+
+		return true;
+	}
+
 	LexemeType Lexer::getLexemeType(Str lexeme) {
 		if (isIdentifier(lexeme)) return ltIdentifier;
 		else if (isNumber(lexeme)) return ltNumber;
 		else if (isSpecial(lexeme)) return ltSpecial;
+		else if (isString(lexeme)) return ltString;
 		else if (lexeme == "") return ltEof;
 
 		return ltError;
