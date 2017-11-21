@@ -56,6 +56,7 @@ namespace lang {
 	public:
 		Str type;
 		Str name;
+		bool isUse = false;
 		vector<FuncDefParam*> params;
 		FuncDef();
 	};
