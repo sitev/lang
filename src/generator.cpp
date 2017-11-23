@@ -2,8 +2,9 @@
 
 namespace lang {
 
-	Generator::Generator(Parser *parser) {
+	Generator::Generator(Parser *parser, Str fn) {
 		this->parser = parser;
+		this->fn = fn;
 	}
 
 
@@ -11,15 +12,17 @@ namespace lang {
 	}
 
 	Str Generator::run() {
-		Str s = "";
+		target = getHeader();
 		int count = parser->nodes.size();
 		//s += "//count nodes = " + to_string(count) + "\r\n";
 		for (int i = 0; i < count; i++) {
 			Node *node = parser->nodes[i];
-			s += generate(node);
+			target += generate(node);
 		}
 
-		return s;
+		saveFiles();
+
+		return "";
 	}
 
 	Str Generator::generate(Node *node, bool isExpNotCR) {
@@ -38,6 +41,10 @@ namespace lang {
 		case ntConstruct: return genConstruct(node);
 		}
 
+		return "";
+	}
+
+	Str Generator::getHeader() {
 		return "";
 	}
 
@@ -166,5 +173,23 @@ namespace lang {
 			s += "\t";
 		}
 		return s;
+	}
+
+	void Generator::saveFiles() {
+		int count = ext.size();
+		if (count < 1) return;
+		int count2 = lstTarget.size();
+		if (count != count2 + 1) return;
+
+		File *f = new File((fn + "." + ext[0]).to_string());
+		f->write((void*)target.to_string().c_str(), target.length());
+		delete f;
+
+		for (int i = 0; i < count2; i++) {
+			Str *t = lstTarget[i];
+			File *f = new File((fn + "." + ext[i + 1]).to_string());
+			f->write((void*)t->to_string().c_str(), t->length());
+			delete f;
+		}
 	}
 }

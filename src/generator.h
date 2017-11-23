@@ -5,13 +5,20 @@ namespace lang {
 	//Test Generator
 	class Generator {
 	public:
-		Generator(Parser *parser);
+		Generator(Parser *parser, Str fn);
 		~Generator();
 
 		virtual Str run();
 		virtual Str generate(Node *node, bool isExpNotCR = false);
+
 	protected:
+		Str fn;
+		vector<Str> ext;
 		Parser *parser;
+		Str target;
+		vector<Str*> lstTarget; // additional targets
+
+		virtual Str getHeader();
 		virtual Str genNumber(Node *node);
 		virtual Str genString(Node *node);
 		virtual Str genVarDef(Node *node);
@@ -26,6 +33,9 @@ namespace lang {
 		virtual Str genConstruct(Node *node);
 
 		virtual Str getTab(int count);
+
+		virtual void saveFiles();
+
 	};
 
 }
