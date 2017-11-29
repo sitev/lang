@@ -33,6 +33,7 @@ namespace lang {
 	class Class;
 	class VarDef : public Node {
 	public:
+		Class *owner = nullptr;
 		Class *clss = nullptr; // если (clss == nullptr) то переменная имеет стандартный тип, иначе она является объектом класса clss
 		Str type;
 		Str name;
@@ -46,14 +47,14 @@ namespace lang {
 		Var();
 	};
 
-	class FuncDefParam {
-	public:
-		Str type;
-		Str name;
+	class FuncDefParam : public VarDef {
 	};
 
 	class FuncDef : public Node {
 	public:
+		Class *owner = nullptr;
+		bool isConstruct = false;
+		Class *clss = nullptr;
 		Str type;
 		Str name;
 		vector<FuncDefParam*> params;
