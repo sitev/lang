@@ -84,6 +84,11 @@ namespace lang {
 		nodeType = ntConstruct;
 	}
 
+	//----------   CodeInsertion   --------------------------------------------
+	CodeInsertion::CodeInsertion() {
+		nodeType = ntCodeInsertion;
+	}
+
 	//----------   Parser   -----------------------------------------------------
 	Parser::Parser(Lexer *lexer) {
 		this->lexer = lexer;

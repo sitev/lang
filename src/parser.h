@@ -6,7 +6,7 @@
 
 namespace lang {
 
-	enum NodeType { ntNone, ntNumber, ntString, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock, ntClass, ntConstruct };
+	enum NodeType { ntNone, ntNumber, ntString, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock, ntClass, ntConstruct, ntCodeInsertion };
 
 	static int g_uid = 1;
 	class Node {
@@ -35,6 +35,7 @@ namespace lang {
 	public:
 		Class *owner = nullptr;
 		Class *clss = nullptr; // если (clss == nullptr) то переменная имеет стандартный тип, иначе она является объектом класса clss
+		bool isRef = false;
 		Str type;
 		Str name;
 		bool isArray = false;
@@ -104,6 +105,11 @@ namespace lang {
 	public:
 		Class *clss = nullptr;
 		Construct();
+	};
+
+	class CodeInsertion : public Node {
+	public:
+		CodeInsertion();
 	};
 
 	class Parser {

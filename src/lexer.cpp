@@ -7,7 +7,7 @@ namespace lang {
 	Lexer::Lexer() {
 		letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
 		numerals = "0123456789";
-		specials = ";(){}=+-*/%";
+		specials = ";(){}=+-*/%@";
 		mode = lmNormal;
 		isSlesh = isMul = isCR = false;
 	}

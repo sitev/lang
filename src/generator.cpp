@@ -39,6 +39,7 @@ namespace lang {
 		case ntCodeBlock: return genCodeBlock(node);
 		case ntClass: return genClass(node);
 		case ntConstruct: return genConstruct(node);
+		case ntCodeInsertion: return genCodeInsertion(node);
 		}
 
 		return "";
@@ -165,6 +166,10 @@ namespace lang {
 
 	Str Generator::genConstruct(Node *node) {
 		return "construct ";
+	}
+
+	Str Generator::genCodeInsertion(Node *node) {
+		return "// CodeInsertion\n";
 	}
 
 	Str Generator::getTab(int count) {
