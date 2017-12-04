@@ -2,8 +2,8 @@
 
 namespace lang {
 
-	enum LexerMode { lmNormal, lmRemmark, lmRemmark2, lmString };
-	enum LexemeType { ltIdentifier, ltNumber, ltSpecial, ltString, ltError, ltEof };
+	enum LexerMode { lmNormal, lmRemmark, lmRemmark2, lmString, lmCodeInsertion };
+	enum LexemeType { ltNone, ltIdentifier, ltNumber, ltSpecial, ltString, ltCodeInsertion, ltError, ltEof };
 
 	class Token {
 	public:
@@ -25,7 +25,7 @@ namespace lang {
 		~Lexer();
 
 		virtual void start(Str s);
-		virtual Str step();
+		virtual Str step(LexemeType &type);
 
 		virtual Str run(Str s);
 

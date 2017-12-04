@@ -21,9 +21,8 @@ namespace lang {
 		pos = 0;
 	}
 
-	Str Lexer::step() {
+	Str Lexer::step(LexemeType &type) {
 		Str a;
-		int len = s.length();
 		while (pos < len) {
 			uchar c = s[pos];
 
@@ -40,11 +39,11 @@ namespace lang {
 					mode = lmString;
 					continue;
 				}
-				if (c == '*' && isSlesh) {
+				if (c == '*' && isSlesh) { 
 					mode = lmRemmark;
 					continue;
 				}
-				if (c == '/' && isSlesh) {
+				if (c == '/' && isSlesh) { 
 					mode = lmRemmark2;
 					continue;
 				}
@@ -86,7 +85,8 @@ namespace lang {
 		start(s);
 		Str result;
 		while (true) {
-			Str lex = step();
+			LexemeType type;
+			Str lex = step(type);
 			result += lex + "\r\n";
 			if (pos >= len) break;
 		}

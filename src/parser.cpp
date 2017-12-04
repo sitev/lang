@@ -116,8 +116,14 @@ namespace lang {
 			return token;
 		}
 
-		Str lexeme = lexer->step();
-		Token token = lexer->getToken(lexeme);
+		LexemeType type = ltNone;
+		Str lexeme = lexer->step(type);
+		Token token;
+		if (type == ltNone) token = lexer->getToken(lexeme);
+		else {
+			token.lexeme = lexeme;
+			token.type = type;
+		}
 		tokens.push_back(token);
 		pos++;
 		len++;
