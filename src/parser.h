@@ -45,6 +45,7 @@ namespace lang {
 	class Var : public Node {
 	public:
 		VarDef *def = nullptr;
+		//vector<FuncDefParam*> params;
 		Var();
 	};
 
@@ -121,6 +122,10 @@ namespace lang {
 		vector<Node*> nodes;
 		Parser(Lexer *lexer);
 		virtual Str run(Str s);
+		virtual void out(Str fn);
+		virtual void outSubNodes(Node *node, int level);
+
+
 		virtual bool doMainCodeBlock() = 0;
 		virtual Token getToken();
 		virtual void savePosition();

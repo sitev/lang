@@ -107,6 +107,57 @@ namespace lang {
 		return result;
 	}
 
+	string nts[] = { "None", "Number", "String", "VarDef", "Var", "FuncDef", "Func", "Operator", "ExpOper", "Expression", "CodeBlock", "Class", "Construct", "CodeInsertion" };
+	void Parser::out(Str fn) {
+		//File *f = new File(fn.to_string(), "wb");
+
+		cout << "Syntax tree" << endl;
+		int count = nodes.size();
+		for (int i = 0; i < count; i++) {
+			Node *node = nodes[i];
+			string ntName = nts[node->nodeType];
+			cout << ntName;
+
+			if (node->nodeType == ntClass) {
+				Class *clss = (Class*)node;
+				cout << " " << clss->name.to_string();
+			}
+
+			cout << endl;
+
+			outSubNodes(node, 1);
+		}
+		//delete f;
+	}
+
+	void Parser::outSubNodes(Node *node, int level) {
+		int count = node->nodes.size();
+		for (int i = 0; i < count; i++) {
+			Node *subNode = node->nodes[i];
+			string ntName = nts[subNode->nodeType];
+
+			for (int j = 0; j < level; j++) cout << " ";
+			cout << ntName;
+
+			if (subNode->nodeType == ntClass) {
+				Class *clss = (Class*)subNode;
+				cout << " " << clss->name.to_string();
+			}
+			else if (subNode->nodeType == ntVarDef) {
+				VarDef *vd = (VarDef*)subNode;
+				cout << " " << vd->name.to_string();
+			}
+			else if (subNode->nodeType == ntFuncDef) {
+				FuncDef *fd = (FuncDef*)subNode;
+				cout << " " << fd->name.to_string();
+			}
+
+			cout << endl;
+
+			outSubNodes(subNode, level + 1);
+		}
+	}
+
 	Token Parser::getToken() {
 		if (pos < len) {
 			Token token = tokens[pos];

@@ -19,6 +19,7 @@ namespace lang {
 		vector<Str*> lstTarget; // additional targets
 
 		virtual Str getHeader();
+		virtual Str getFooter();
 		virtual Str genNumber(Node *node);
 		virtual Str genString(Node *node);
 		virtual Str genVarDef(Node *node);
@@ -33,7 +34,7 @@ namespace lang {
 		virtual Str genConstruct(Node *node);
 		virtual Str genCodeInsertion(Node *node);
 
-		virtual Str getTab(int count);
+		virtual Str getTab(int count, int value);
 
 		virtual void saveFiles();
 

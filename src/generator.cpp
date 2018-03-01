@@ -19,6 +19,7 @@ namespace lang {
 			Node *node = parser->nodes[i];
 			target += generate(node);
 		}
+		target += getFooter();
 
 		saveFiles();
 
@@ -46,6 +47,10 @@ namespace lang {
 	}
 
 	Str Generator::getHeader() {
+		return "";
+	}
+
+	Str Generator::getFooter() {
 		return "";
 	}
 
@@ -172,8 +177,8 @@ namespace lang {
 		return "// CodeInsertion\n";
 	}
 
-	Str Generator::getTab(int count) {
-		Str s = "";
+	Str Generator::getTab(int count, int value) {
+		Str s;// = "/*" + to_string(value) + "*/";
 		for (int i = 0; i < count; i++) {
 			s += "\t";
 		}
