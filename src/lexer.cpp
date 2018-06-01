@@ -24,7 +24,7 @@ namespace lang {
 	Str Lexer::step(LexemeType &type) {
 		Str a;
 		while (pos < len) {
-			uchar c = s[pos];
+			ubyte c = s[pos];
 
 			if (c == 13) isCR = true; else isCR = false;
 			if (c <= 32) c = 32;
