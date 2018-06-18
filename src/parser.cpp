@@ -9,6 +9,7 @@ namespace lang {
 	Node::Node() {
 		nodeType = ntNone;
 		uid = g_uid++;
+		nodeCount = 0;
 	}
 
 	//----------   Number   --------------------------------------------------
@@ -24,6 +25,17 @@ namespace lang {
 	//----------   VarDef   -----------------------------------------------------
 	VarDef::VarDef() {
 		nodeType = ntVarDef;
+	}
+	
+	bool VarDef::compare(Node *node) {
+		if (node == nullptr) return false;
+		VarDef *vd = (VarDef*)node;
+		if (name != vd->name) return false;
+		if (clss == nullptr) {
+			if (type != vd->type) return false;
+		}
+
+		return true;
 	}
 
 	//----------   Var   -----------------------------------------------------
@@ -90,9 +102,10 @@ namespace lang {
 	}
 
 	//----------   Parser   -----------------------------------------------------
-	Parser::Parser(Lexer *lexer) {
+	Parser::Parser(Lexer *lexer, int nPass) {
 		this->lexer = lexer;
 		pos = savePos = len = 0;
+		this->nPass = nPass;
 	}
 
 	Str Parser::run(Str s) {
@@ -101,8 +114,14 @@ namespace lang {
 		pos = savePos = len = 0;
 		tokens.clear();
 		nodes.clear();
+		nodeCount = 0;
 
-		bool flag = doMainCodeBlock();
+		for (int i = nPass; i > 0; i--) {
+			if (nPass == 1) iPass = ptSingle;
+			else iPass = (PassType)i;
+			bool flag = doMainCodeBlock();
+			pos = 0;
+		}
 
 		return result;
 	}

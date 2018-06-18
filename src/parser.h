@@ -7,6 +7,7 @@
 namespace lang {
 
 	enum NodeType { ntNone, ntNumber, ntString, ntVarDef, ntVar, ntFuncDef, ntFunc, ntOperator, ntExpOper, ntExpression, ntCodeBlock, ntClass, ntConstruct, ntCodeInsertion };
+	enum PassType { ptMain = 1, ptLight = 2, ptSingle = 3 };
 
 	static int g_uid = 1;
 	class Node {
@@ -15,7 +16,10 @@ namespace lang {
 		NodeType nodeType;
 		Node *parent = nullptr;
 		vector<Node*> nodes;
-		Node();
+		int nodeCount;
+		Node(); 
+		virtual ~Node() {}
+		virtual bool compare(Node *node) { return false; }
 	};
 
 	class Number : public Node {
@@ -39,13 +43,14 @@ namespace lang {
 		Str type;
 		Str name;
 		bool isArray = false;
+		bool isTypeUnknown = false;
 		VarDef();
+		virtual bool compare(Node *node);
 	};
 
 	class Var : public Node {
 	public:
 		VarDef *def = nullptr;
-		//vector<FuncDefParam*> params;
 		Var();
 	};
 
@@ -86,6 +91,7 @@ namespace lang {
 	public:
 		bool isTZ = false;
 		Expression();
+		virtual bool compare(Node *node) { return true; }
 	};
 
 	class CodeBlock : public Node {
@@ -118,9 +124,14 @@ namespace lang {
 		Lexer *lexer;
 		int pos, savePos, len;
 		vector<Token> tokens;
+
+		int nPass;
+		PassType iPass;
+
+		int nodeCount;
 	public:
 		vector<Node*> nodes;
-		Parser(Lexer *lexer);
+		Parser(Lexer *lexer, int nPass = 1);
 		virtual Str run(Str s);
 		virtual void out(Str fn);
 		virtual void outSubNodes(Node *node, int level);
