@@ -38,6 +38,7 @@ namespace lang {
 
 		virtual void saveFiles();
 
+		virtual Str findVarNameIfField(Node *node, bool isConstruct = false);
 	};
 
 }

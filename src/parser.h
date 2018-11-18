@@ -16,7 +16,7 @@ namespace lang {
 		NodeType nodeType;
 		Node *parent = nullptr;
 		vector<Node*> nodes;
-		int nodeCount;
+		int nodeCount = 0;
 		Node(); 
 		virtual ~Node() {}
 		virtual bool compare(Node *node) { return false; }

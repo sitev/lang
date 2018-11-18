@@ -128,25 +128,32 @@ namespace lang {
 
 	string nts[] = { "None", "Number", "String", "VarDef", "Var", "FuncDef", "Func", "Operator", "ExpOper", "Expression", "CodeBlock", "Class", "Construct", "CodeInsertion" };
 	void Parser::out(Str fn) {
+		ofstream fout(fn.to_string());
 		//File *f = new File(fn.to_string(), "wb");
 
 		cout << "Syntax tree" << endl;
+
 		int count = nodes.size();
 		for (int i = 0; i < count; i++) {
 			Node *node = nodes[i];
 			string ntName = nts[node->nodeType];
 			cout << ntName;
+			fout << ntName;
 
 			if (node->nodeType == ntClass) {
 				Class *clss = (Class*)node;
 				cout << " " << clss->name.to_string();
 			}
 
+			cout << " - " << node->nodes.size();
+			fout << " - " << node->nodes.size();
+
 			cout << endl;
+			fout << endl;
 
 			outSubNodes(node, 1);
 		}
-		//delete f;
+
 	}
 
 	void Parser::outSubNodes(Node *node, int level) {

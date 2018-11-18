@@ -202,4 +202,37 @@ namespace lang {
 			delete f;
 		}
 	}
+
+	Str Generator::findVarNameIfField(Node *node, bool isConstruct) {
+		if (isConstruct) {
+			if (node->nodeType == ntConstruct) {
+				if (node->parent->nodeType == ntExpression) {
+					int count = node->parent->nodes.size();
+					if (count > 0) {
+						Node *nd = node->parent->nodes[0];
+						if (nd->nodeType == ntVar) {
+							Var *v = (Var*)nd;
+							return v->def->name;
+						}
+					}
+				}
+			}
+			return "";
+		}
+		if (node->parent) {
+			if (node->parent->nodeType == ntConstruct) {
+				if (node->parent->parent->nodeType == ntExpression) {
+					int count = node->parent->parent->nodes.size();
+					if (count > 0) {
+						Node *nd = node->parent->parent->nodes[0];
+						if (nd->nodeType == ntVar) {
+							Var *v = (Var*)nd;
+							return v->def->name;
+						}
+					}
+				}
+			}
+		}
+		return "";
+	}
 }
