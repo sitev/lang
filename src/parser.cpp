@@ -103,6 +103,7 @@ namespace lang {
 
 	//----------   Parser   -----------------------------------------------------
 	Parser::Parser(Lexer *lexer, int nPass) {
+		//nPass - указываем скольки проходной парсер
 		this->lexer = lexer;
 		pos = savePos = len = 0;
 		this->nPass = nPass;

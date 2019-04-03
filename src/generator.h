@@ -2,6 +2,8 @@
 
 namespace lang {
 
+	enum GeneratorType {gtNone, gtJsGen = 1, gtCppGen = 2, gtAsGen = 3, gtLuaGen = 4};
+
 	//Test Generator
 	class Generator {
 	public:
