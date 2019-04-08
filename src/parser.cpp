@@ -109,13 +109,17 @@ namespace lang {
 		this->nPass = nPass;
 	}
 
-	Str Parser::run(Str s) {
-		lexer->start(s);
-		Str result = "";
+	void Parser::clear() {
 		pos = savePos = len = 0;
 		tokens.clear();
 		nodes.clear();
 		nodeCount = 0;
+	}
+
+	Str Parser::run(Str s) {
+		lexer->start(s);
+		clear();
+		Str result = "";
 
 		for (int i = nPass; i > 0; i--) {
 			if (nPass == 1) iPass = ptSingle;

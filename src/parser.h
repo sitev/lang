@@ -129,6 +129,7 @@ namespace lang {
 		PassType iPass;
 
 		int nodeCount;
+		virtual void clear();
 	public:
 		vector<Node*> nodes;
 		Parser(Lexer *lexer, int nPass = 1);
